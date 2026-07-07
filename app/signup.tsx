@@ -3,7 +3,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 
-import { Image, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { Image, ImageBackground, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function SignUp(){
@@ -51,11 +51,12 @@ export default function SignUp(){
 }
 
     return (
+      <ImageBackground source={require("../assets/images/background.jpg")} style={styles.background} >
        <SafeAreaView style={styles.container}>
             <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height" }>
             <ScrollView contentContainerStyle={{flexGrow:1, gap:18, padding:20,alignItems: "center"}}>
             <Image
-                  source={require("../assets/images/SignUp.jpg")}
+             source={require("../assets/images/logo.png")}
                   style={styles.img}
             />
 
@@ -91,13 +92,14 @@ export default function SignUp(){
                   <Text style={{color:"#8b8b8b"}}>Do you Have Account</Text>
                   <Text style={{fontWeight:"bold", fontSize:15}} 
                                      onPress={()=>{
-                                   /* router.replace("/");*/
+                                    router.replace("/");
                                   }}>Sign In</Text>
             </View>
 
             </ScrollView>
             </KeyboardAvoidingView>
        </SafeAreaView>
+       </ImageBackground>
     )
 }
 
@@ -113,6 +115,9 @@ const styles = StyleSheet.create({
            justifyContent :"center",
            gap :10,
       },
+      background: {
+            flex: 1,
+          },
       container : {
             flex : 1,
             backgroundColor : "#fff",
@@ -122,8 +127,8 @@ const styles = StyleSheet.create({
       },
       img :{
           width: "100%",
-          height: 200,
-          
+          height: 300,
+          borderRadius: 180,
       },
 
       input:{
