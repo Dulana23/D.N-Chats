@@ -164,7 +164,7 @@ useFocusEffect(
                                 <Text style={styles.msgTxt}>{item.last_message
                             ? item.last_message.message_text : "No messages yet"}</Text>
                             </View>
-                            <Text style={styles.time}>{timeFormat(item.last_message.sent_at)}</Text>
+                            <Text style={styles.time}>{item.last_message ? timeFormat(item.last_message.sent_at) : ""}</Text>
                         </Pressable>
                     );
                 }}

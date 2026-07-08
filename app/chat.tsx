@@ -118,8 +118,9 @@ export default function chat(){
     return(
        
     <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-                   style={styles.container}
+          style={{ flex: 1 }}
+                 behavior={Platform.OS === "ios" ? "padding" : "height"}
+  
         >
 
     <SafeAreaView style={styles.container}>
@@ -142,13 +143,13 @@ export default function chat(){
             <SimpleLineIcons name="options-vertical" size={16} color="black" />
         </View>
           
-        <ImageBackground
-    source={require("../assets/images/Chat-wallpaper.png")} // change path if needed
-    style={styles.bodyView}
-    resizeMode="cover"
+   <ImageBackground
+       source={require("../assets/images/Chat-wallpaper.png")}
+           style={[styles.bodyView,{flex:1}]}  resizeMode="cover"
 >
     <FlatList
         data={chatHistory}
+      
         renderItem={({ item }) => {
             return (
                 <View
@@ -207,34 +208,36 @@ export default function chat(){
             <TextInput style={styles.input} placeholder='Enter Message' onChangeText={settext} value={text} />
 
             <Pressable style={styles.sendBtn} onPress={() => {
-/*
-                if (webSocket.current) {
 
-                    const msg = {
-                        message: text,
-                        sent_at: new Date().toString(),
-                        sender: loggedUser.mobile
-                    };
+               if (webSocket.current && text.trim() !== "") {
 
-                    setChatHistory( oldChat => [ msg , ...oldChat] );
+   
+                      const msg = {
+                        message_text: text,
+                        sent_at: new Date().toISOString(),
+                        receiver_id: loggedUser.user_id,
+                       chat_id: Number(chatId),
+                       status: "sent",
+                       };
 
-                    console.log("receiver: " + userMobile);
+                  setChatHistory((oldChat) => [msg, ...oldChat]);
 
-                    const data = {
-                        type: "chat",
-                        data: text,
-                        receiver: userMobile,
-                        sender: loggedUser.mobile,
-                        chatId:chatId
-                    };
+                  const data = {
+                    type: "chat",
+                    message_text: text,
+                    receiver_id: loggedUser.user_id,
+                    sender_id: Number(params.userId), 
+                    chat_id: Number(chatId),
+                };
 
-                    settext("");
+    console.log("Sending:", data);
 
-                    webSocket.current.send(JSON.stringify(data));
+    webSocket.current.send(JSON.stringify(data));
 
-                }
-</View>
-            */  }}>
+    settext("");
+}
+
+           }}>
                 <FontAwesome name="send" size={24} color="white" />
             </Pressable>
 
@@ -332,7 +335,7 @@ const styles = StyleSheet.create({
         padding: 20,
         flexDirection: "row",
         alignItems: "center",
-        gap: 15,
+       
     },
 
     input: {
